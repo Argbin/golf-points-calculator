@@ -1,10 +1,10 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="4ZlMt9L4eKpHRKF-YWVc">
-    <mxGraphModel dx="975" dy="580" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1414" dy="841" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="zLhtH8zUIcxtks3EZHjg-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="Rotary Encoder" vertex="1">
+        <mxCell id="zLhtH8zUIcxtks3EZHjg-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="130" width="130" x="360.5" y="96" as="geometry" />
         </mxCell>
         <mxCell id="zLhtH8zUIcxtks3EZHjg-2" edge="1" parent="1" source="zLhtH8zUIcxtks3EZHjg-13" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;fillColor=#e51400;strokeColor=light-dark(#B20000,#FF0000);exitX=0.201;exitY=-0.002;exitDx=0;exitDy=0;exitPerimeter=0;" target="zLhtH8zUIcxtks3EZHjg-1" value="">
@@ -234,7 +234,7 @@
             <mxPoint x="1" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="zLhtH8zUIcxtks3EZHjg-46" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Battery" vertex="1">
+        <mxCell id="zLhtH8zUIcxtks3EZHjg-46" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Battery (2x AAA)" vertex="1">
           <mxGeometry height="60" width="120" x="152" y="333" as="geometry" />
         </mxCell>
         <mxCell id="zLhtH8zUIcxtks3EZHjg-47" edge="1" parent="1" source="zLhtH8zUIcxtks3EZHjg-46" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;strokeColor=light-dark(#B20000,#FF0000);" value="">
