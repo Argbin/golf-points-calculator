@@ -234,6 +234,31 @@
             <mxPoint x="1" as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="zLhtH8zUIcxtks3EZHjg-46" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Battery" vertex="1">
+          <mxGeometry height="60" width="120" x="152" y="333" as="geometry" />
+        </mxCell>
+        <mxCell id="zLhtH8zUIcxtks3EZHjg-47" edge="1" parent="1" source="zLhtH8zUIcxtks3EZHjg-46" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;strokeColor=light-dark(#B20000,#FF0000);" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="297" y="378" as="sourcePoint" />
+            <mxPoint x="379.48" y="348" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zLhtH8zUIcxtks3EZHjg-49" connectable="0" parent="zLhtH8zUIcxtks3EZHjg-47" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="3V" vertex="1">
+          <mxGeometry relative="1" x="-0.6939" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zLhtH8zUIcxtks3EZHjg-48" edge="1" parent="1" source="zLhtH8zUIcxtks3EZHjg-46" style="endArrow=none;html=1;rounded=0;exitX=0.993;exitY=0.622;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#424242;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="288" y="414" as="sourcePoint" />
+            <mxPoint x="379.48" y="370.32" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zLhtH8zUIcxtks3EZHjg-50" connectable="0" parent="zLhtH8zUIcxtks3EZHjg-48" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="GND" vertex="1">
+          <mxGeometry relative="1" x="-0.7063" y="-1" as="geometry">
+            <mxPoint x="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
