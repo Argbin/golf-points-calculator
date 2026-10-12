@@ -1,10 +1,10 @@
-18:01:27 **** Incremental Build of configuration Debug for project gpc_code ****
+18:09:10 **** Incremental Build of configuration Debug for project gpc_code ****
 make -j16 all 
 arm-none-eabi-size  gpc_code.elf 
    text	   data	    bss	    dec	    hex	filename
-  12944	     12	   1788	  14744	   3998	gpc_code.elf
+  13280	     12	   1796	  15088	   3af0	gpc_code.elf
 Finished building: default.size.stdout
  
 
-18:01:27 Build Finished. 0 errors, 0 warnings. (took 291ms)
+18:09:10 Build Finished. 0 errors, 0 warnings. (took 382ms)
 
