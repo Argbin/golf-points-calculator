@@ -129,6 +129,7 @@ int main(void) {
 			ROTATE_90, WHITE);
 	Paint_SelectImage(ImageBuffer);
 	Paint_Clear(WHITE);
+	EPD_2in13_V4_Display_Base(ImageBuffer);
 
 	/* USER CODE END 2 */
 
@@ -155,9 +156,9 @@ int main(void) {
 			if (now - last_flank_causing_exti >= 20) {//Delay to eliminate contact bounce.
 				last_managed_exti = last_flank_causing_exti;
 				//What happens when the button is pressed.
-				Paint_Clear(WHITE);
-				Paint_DrawNum(10, 40, encoder_value, &Font24, WHITE, BLACK);//Draw value.
-				EPD_2in13_V4_Display(ImageBuffer);	//Send data to display.
+				Paint_ClearWindows(10, 40, 74, 64, WHITE);
+				Paint_DrawNum(10, 40, encoder_value, &Font24, WHITE, BLACK);
+				EPD_2in13_V4_Display_Partial(ImageBuffer);
 			}
 		}
 		/* USER CODE END WHILE */
