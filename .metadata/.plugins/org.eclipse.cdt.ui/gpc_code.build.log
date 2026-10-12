@@ -1,4 +1,4 @@
-18:09:10 **** Incremental Build of configuration Debug for project gpc_code ****
+18:30:25 **** Incremental Build of configuration Debug for project gpc_code ****
 make -j16 all 
 arm-none-eabi-size  gpc_code.elf 
    text	   data	    bss	    dec	    hex	filename
@@ -6,5 +6,5 @@ arm-none-eabi-size  gpc_code.elf
 Finished building: default.size.stdout
  
 
-18:09:10 Build Finished. 0 errors, 0 warnings. (took 382ms)
+18:30:26 Build Finished. 0 errors, 0 warnings. (took 395ms)
 

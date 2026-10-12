@@ -481,6 +481,8 @@ int main(void) {
  800057e:	681b      	ldr	r3, [r3, #0]
  8000580:	4a0c      	ldr	r2, [pc, #48]	@ (80005b4 <main+0x84>)
  8000582:	6013      	str	r3, [r2, #0]
+
+				//What happens when the button is pressed.
 				if(button_press == 0){
  8000584:	4b0c      	ldr	r3, [pc, #48]	@ (80005b8 <main+0x88>)
  8000586:	781b      	ldrb	r3, [r3, #0]

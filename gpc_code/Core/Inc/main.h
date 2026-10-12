@@ -77,8 +77,16 @@ void Error_Handler(void);
 #define SMPS_PG_GPIO_Port GPIOA
 #define SMPS_SW_Pin GPIO_PIN_7
 #define SMPS_SW_GPIO_Port GPIOA
+#define EPD_CS_Pin GPIO_PIN_12
+#define EPD_CS_GPIO_Port GPIOB
 #define LD4_Pin GPIO_PIN_13
 #define LD4_GPIO_Port GPIOB
+#define EPD_DC_Pin GPIO_PIN_14
+#define EPD_DC_GPIO_Port GPIOB
+#define EPD_RST_Pin GPIO_PIN_6
+#define EPD_RST_GPIO_Port GPIOC
+#define EPD_BUSY_Pin GPIO_PIN_7
+#define EPD_BUSY_GPIO_Port GPIOC
 #define RE_SW_Pin GPIO_PIN_8
 #define RE_SW_GPIO_Port GPIOA
 #define RE_SW_EXTI_IRQn EXTI9_5_IRQn
