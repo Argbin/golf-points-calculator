@@ -81,6 +81,7 @@ void Error_Handler(void);
 #define LD4_GPIO_Port GPIOB
 #define RE_SW_Pin GPIO_PIN_8
 #define RE_SW_GPIO_Port GPIOA
+#define RE_SW_EXTI_IRQn EXTI9_5_IRQn
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
