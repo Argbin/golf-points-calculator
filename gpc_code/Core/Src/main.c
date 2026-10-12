@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "EPD_2in13_V4.h"
+#include "GUI_Paint.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

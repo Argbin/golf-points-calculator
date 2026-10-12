@@ -1,0 +1,9 @@
+../Core/Src/DEV_Config.c:35:6:DEV_SPI_WriteByte	1
+../Core/Src/DEV_Config.c:40:6:DEV_SPI_Write_nByte	1
+../Core/Src/DEV_Config.c:45:6:DEV_GPIO_Mode	2
+../Core/Src/DEV_Config.c:63:6:DEV_GPIO_Init	1
+../Core/Src/DEV_Config.c:72:6:DEV_SPI_Init	1
+../Core/Src/DEV_Config.c:81:6:DEV_SPI_SendData	3
+../Core/Src/DEV_Config.c:106:7:DEV_SPI_ReadData	3
+../Core/Src/DEV_Config.c:131:5:DEV_Module_Init	1
+../Core/Src/DEV_Config.c:140:6:DEV_Module_Exit	1

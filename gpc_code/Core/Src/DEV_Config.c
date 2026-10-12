@@ -30,17 +30,16 @@
 #
 ******************************************************************************/
 #include "DEV_Config.h"
-#include "stm32f1xx_hal_spi.h"
 
-extern SPI_HandleTypeDef hspi1;
+extern SPI_HandleTypeDef hspi2;
 void DEV_SPI_WriteByte(UBYTE value)
 {
-    HAL_SPI_Transmit(&hspi1, &value, 1, 1000);
+    HAL_SPI_Transmit(&hspi2, &value, 1, 1000);
 }
 
 void DEV_SPI_Write_nByte(UBYTE *value, UDOUBLE len)
 {
-    HAL_SPI_Transmit(&hspi1, value, len, 1000);
+    HAL_SPI_Transmit(&hspi2, value, len, 1000);
 }
 
 void DEV_GPIO_Mode(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, UWORD Mode)
@@ -63,7 +62,7 @@ void DEV_GPIO_Mode(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, UWORD Mode)
 
 void DEV_GPIO_Init()
 {
-    HAL_SPI_MspDeInit(&hspi1);
+    HAL_SPI_MspDeInit(&hspi2);
     
     //HAL_SPI_DeInit(&hspi1); 
 //    __HAL_RCC_SPI1_CLK_DISABLE();
@@ -72,7 +71,7 @@ void DEV_GPIO_Init()
 
 void DEV_SPI_Init()
 {
-    HAL_SPI_MspInit(&hspi1);
+    HAL_SPI_MspInit(&hspi2);
     //HAL_SPI_DeInit(&hspi1); 
 //    __HAL_RCC_SPI1_CLK_DISABLE();
 //    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5|GPIO_PIN_7);
