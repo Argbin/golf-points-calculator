@@ -130,31 +130,23 @@ int main(void)
 	Paint_SelectImage(ImageBuffer);
 	Paint_Clear(WHITE);
 
-	//Draw char
-	Paint_DrawChar(10, 40, 'A', &Font24, BLACK, WHITE);
 
-	//Send data to display
-	EPD_2in13_V4_Display(ImageBuffer);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1) {
 		uint32_t now;
-		encoder_value = (TIM2->CNT) / 4;
+		encoder_value = (TIM2->CNT) / 4;	//Get encoder value.
 
 		if(last_flank_causing_exti != last_managed_exti){	//If button has been pressed.
 			now = HAL_GetTick();
 			if(now - last_flank_causing_exti >= 20){	//Delay to eliminate contact bounce.
 				last_managed_exti = last_flank_causing_exti;
-
 				//What happens when the button is pressed.
-				if(button_press == 0){
-					button_press = 1;
-				}
-				else if(button_press == 1){
-					button_press = 0;
-				}
+				Paint_Clear(WHITE);
+				Paint_DrawNum(10, 40, encoder_value, &Font24, WHITE, BLACK);	//Draw value.
+				EPD_2in13_V4_Display(ImageBuffer);	//Send data to display.
 			}
 		}
     /* USER CODE END WHILE */

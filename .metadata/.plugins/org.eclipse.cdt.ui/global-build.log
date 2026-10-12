@@ -1,4 +1,4 @@
-20:44:51 **** Incremental Build of configuration Debug for project gpc_code ****
+22:18:29 **** Incremental Build of configuration Debug for project gpc_code ****
 make -j16 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L433xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "gpc_code.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Albin\Documents\GitHub\golf-points-calculator\gpc_code\STM32L433RCTXP_FLASH.ld" --specs=nosys.specs -Wl,-Map="gpc_code.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,19 +7,26 @@ Finished building target: gpc_code.elf
 arm-none-eabi-size  gpc_code.elf 
 arm-none-eabi-objdump -h -S gpc_code.elf  > "gpc_code.list"
    text	   data	    bss	    dec	    hex	filename
-  28508	    112	  17008	  45628	   b23c	gpc_code.elf
+  29092	    112	  17008	  46212	   b484	gpc_code.elf
 Finished building: default.size.stdout
  
 Finished building: gpc_code.list
  
-20:44:56 **** Incremental Build of configuration Debug for project gpc_code ****
+22:18:33 **** Incremental Build of configuration Debug for project gpc_code ****
 make -j16 all 
 arm-none-eabi-size  gpc_code.elf 
    text	   data	    bss	    dec	    hex	filename
-  28508	    112	  17008	  45628	   b23c	gpc_code.elf
+  29092	    112	  17008	  46212	   b484	gpc_code.elf
 Finished building: default.size.stdout
  
-20:45:54 **** Incremental Build of configuration Debug for project gpc_code ****
+22:18:55 **** Incremental Build of configuration Debug for project gpc_code ****
+make -j16 all 
+arm-none-eabi-size  gpc_code.elf 
+   text	   data	    bss	    dec	    hex	filename
+  29092	    112	  17008	  46212	   b484	gpc_code.elf
+Finished building: default.size.stdout
+ 
+22:19:29 **** Incremental Build of configuration Debug for project gpc_code ****
 make -j16 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L433xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "gpc_code.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Albin\Documents\GitHub\golf-points-calculator\gpc_code\STM32L433RCTXP_FLASH.ld" --specs=nosys.specs -Wl,-Map="gpc_code.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -28,8 +35,57 @@ Finished building target: gpc_code.elf
 arm-none-eabi-size  gpc_code.elf 
 arm-none-eabi-objdump -h -S gpc_code.elf  > "gpc_code.list"
    text	   data	    bss	    dec	    hex	filename
-  28508	    112	  17008	  45628	   b23c	gpc_code.elf
+  29092	    112	  17008	  46212	   b484	gpc_code.elf
 Finished building: default.size.stdout
  
 Finished building: gpc_code.list
+ 
+22:19:49 **** Incremental Build of configuration Debug for project gpc_code ****
+make -j16 all 
+arm-none-eabi-size  gpc_code.elf 
+   text	   data	    bss	    dec	    hex	filename
+  29092	    112	  17008	  46212	   b484	gpc_code.elf
+Finished building: default.size.stdout
+ 
+22:22:47 **** Incremental Build of configuration Debug for project gpc_code ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L433xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "gpc_code.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Albin\Documents\GitHub\golf-points-calculator\gpc_code\STM32L433RCTXP_FLASH.ld" --specs=nosys.specs -Wl,-Map="gpc_code.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: gpc_code.elf
+ 
+arm-none-eabi-size  gpc_code.elf 
+arm-none-eabi-objdump -h -S gpc_code.elf  > "gpc_code.list"
+   text	   data	    bss	    dec	    hex	filename
+  29056	    112	  17008	  46176	   b460	gpc_code.elf
+Finished building: default.size.stdout
+ 
+Finished building: gpc_code.list
+ 
+22:23:00 **** Incremental Build of configuration Debug for project gpc_code ****
+make -j16 all 
+arm-none-eabi-size  gpc_code.elf 
+   text	   data	    bss	    dec	    hex	filename
+  29056	    112	  17008	  46176	   b460	gpc_code.elf
+Finished building: default.size.stdout
+ 
+22:27:06 **** Incremental Build of configuration Debug for project gpc_code ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L433xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "gpc_code.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Albin\Documents\GitHub\golf-points-calculator\gpc_code\STM32L433RCTXP_FLASH.ld" --specs=nosys.specs -Wl,-Map="gpc_code.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: gpc_code.elf
+ 
+arm-none-eabi-size  gpc_code.elf 
+arm-none-eabi-objdump -h -S gpc_code.elf  > "gpc_code.list"
+   text	   data	    bss	    dec	    hex	filename
+  29060	    112	  17008	  46180	   b464	gpc_code.elf
+Finished building: default.size.stdout
+ 
+Finished building: gpc_code.list
+ 
+22:27:19 **** Incremental Build of configuration Debug for project gpc_code ****
+make -j16 all 
+arm-none-eabi-size  gpc_code.elf 
+   text	   data	    bss	    dec	    hex	filename
+  29060	    112	  17008	  46180	   b464	gpc_code.elf
+Finished building: default.size.stdout
  
