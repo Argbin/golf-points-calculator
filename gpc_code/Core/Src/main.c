@@ -65,9 +65,12 @@ static void MX_SPI2_Init(void);
 /* USER CODE BEGIN 0 */
 volatile uint32_t encoder_value = 0;	//Used to read rotary encoder rotation.
 volatile uint8_t button_press = 0;
+
 //Used to read rotary encoder interrupt.
 volatile uint32_t last_managed_exti = 0;
 volatile uint32_t last_flank_causing_exti = 0;
+
+UBYTE ImageBuffer[4000]; //Display buffer.
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == RE_SW_Pin) {
@@ -112,13 +115,26 @@ int main(void)
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
     HAL_GPIO_WritePin(SMPS_EN_GPIO_Port, SMPS_EN_Pin, GPIO_PIN_SET);
-    HAL_Delay(50); // Låt spänningen stabiliseras
+    HAL_Delay(50);
 
   	HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+
+  	//Initialize display.
 	DEV_Module_Init();
 	EPD_2in13_V4_Init();
 	EPD_2in13_V4_Clear();
 	HAL_Delay(500);
+
+	//Configure and clear paint buffer
+	Paint_NewImage(ImageBuffer, EPD_2in13_V4_WIDTH, EPD_2in13_V4_HEIGHT, ROTATE_90, WHITE);
+	Paint_SelectImage(ImageBuffer);
+	Paint_Clear(WHITE);
+
+	//Draw char
+	Paint_DrawChar(10, 40, 'A', &Font24, BLACK, WHITE);
+
+	//Send data to display
+	EPD_2in13_V4_Display(ImageBuffer);
   /* USER CODE END 2 */
 
   /* Infinite loop */
