@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "EPD_2in13_V4.h"
 #include "GUI_Paint.h"
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,21 +64,79 @@ static void MX_SPI2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-volatile uint32_t encoder_value = 0;	//Used to read rotary encoder rotation.
-volatile uint8_t button_press = 0;
+volatile int32_t encoder_value = 0;	//Used to read rotary encoder rotation.
+volatile uint32_t last_encoder_value = 0;
 
 //Used to read rotary encoder interrupt.
 volatile uint32_t last_managed_exti = 0;
 volatile uint32_t last_flank_causing_exti = 0;
 
+//States.
+enum State { //Are we selecting a value or changing a value.
+  Entering_Number,
+  Choosing_Number,
+};
+enum activeVariable { //What value are we selecting or changing.
+	Hole,
+	HCP,
+	Strokes,
+};
+
+//Golf variables.
+volatile uint32_t extra_strokes = 0;
+volatile uint16_t hole = 0;
+volatile int strokes[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+volatile int points[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+int par[] = {0, 3, 4, 4, 5, 4, 4, 4, 4, 3, 4, 4, 3, 5, 4, 4, 5, 3, 4};
+int hcp_index[] = {0, 17, 9, 11, 3, 1, 15, 7, 5, 13, 6, 14, 18, 4, 8, 2, 12, 16, 10};
+
+
 UBYTE ImageBuffer[4000]; //Display buffer.
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {  //Register button press.
 	if (GPIO_Pin == RE_SW_Pin) {
 		if (last_flank_causing_exti == last_managed_exti) {
 			last_flank_causing_exti = HAL_GetTick();
 		}
 	}
+}
+
+//Calculate points for individual holes and store in points[].
+void calculate_stableford_points() {
+    if (hole < 1 || hole > 18) {
+        return;
+    }
+
+    if (strokes[hole] == 0) {
+        points[hole] = 0;
+        return;
+    }
+
+    int base_extra_strokes = extra_strokes / 18;
+    int remaining_strokes = extra_strokes % 18;
+    int strokes_for_this_hole = base_extra_strokes;
+
+    if (hcp_index[hole] <= remaining_strokes) {
+        strokes_for_this_hole += 1;
+    }
+
+    int net_strokes = strokes[hole] - strokes_for_this_hole;
+    int p = par[hole] - net_strokes + 2;
+
+    if (p < 0) {
+        p = 0;
+    }
+
+    points[hole] = p;
+}
+
+//Returns total amount of accumulated points by reading and adding up points[].
+uint32_t get_total_points(){
+	uint32_t total_points = 0;
+	for(int i = 0; i < 19; i++){
+		total_points += points[i];
+	}
+	return total_points;
 }
 /* USER CODE END 0 */
 
@@ -124,15 +183,31 @@ int main(void) {
 	EPD_2in13_V4_Clear();
 	HAL_Delay(500);
 
-	//Configure and clear paint buffer
-	Paint_NewImage(ImageBuffer, EPD_2in13_V4_WIDTH, EPD_2in13_V4_HEIGHT,
-			ROTATE_90, WHITE);
+	//Configure ImageBuffer and add base text on screen.
+	Paint_NewImage(ImageBuffer, EPD_2in13_V4_WIDTH, EPD_2in13_V4_HEIGHT, ROTATE_90, WHITE);
 	Paint_SelectImage(ImageBuffer);
 	Paint_Clear(WHITE);
 	Paint_DrawString_EN(0, 0, "Ulricehamn GK", &Font24, BLACK, WHITE);
 	Paint_DrawString_EN(0, 26, "Extra shots:", &Font24, BLACK, WHITE);
+	Paint_DrawString_EN(0, 52, "Hole:", &Font24, BLACK, WHITE);
+	Paint_DrawString_EN(0, 78, "Strokes:", &Font24, BLACK, WHITE);
+	Paint_DrawString_EN(0, 104, "Pts:", &Font16, BLACK, WHITE);
+	Paint_DrawString_EN(135, 52, "Par:", &Font24, BLACK, WHITE);
+	Paint_DrawString_EN(80, 104, "Total-Pts:", &Font16, BLACK, WHITE);
 	EPD_2in13_V4_Display_Base(ImageBuffer);
 
+	//Add a "selection line" under "Extra shots" value on screen.
+	Paint_DrawLine(214, 51, 231, 51, BLACK, 1, LINE_STYLE_DOTTED);
+	EPD_2in13_V4_Display_Partial(ImageBuffer);
+
+	//Setup state variables with starting values.
+	enum State st;
+	st = Choosing_Number;
+	enum activeVariable av;
+	av = HCP;
+
+	//Variable used to store which way the encoder was turned.
+	bool bigger;
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -141,27 +216,91 @@ int main(void) {
 		//Logic for encoder interrupt.
 		uint32_t now;
 
-		//Logic to get encoder value between 0-54.
+		//Logic to get encoder value
 		int32_t raw_count = (int32_t) TIM2->CNT;
-		if (raw_count < 0) {
-			TIM2->CNT = 0;
-			encoder_value = 0;
-		} else if (raw_count > (54 * 4 + 3)) {
-			TIM2->CNT = (54 * 4 + 3);
-			encoder_value = 54;
-		} else {
-			encoder_value = raw_count / 4;
+		encoder_value = raw_count / 4;
+
+		//Check if button has been pressed. If it has then toggle st between Entering_Number and Choosing_Number.
+		if (last_flank_causing_exti != last_managed_exti) {
+			now = HAL_GetTick();
+			if (now - last_flank_causing_exti >= 20) {	//Delay to eliminate contact bounce.
+				last_managed_exti = last_flank_causing_exti;
+				if(st == Entering_Number){
+					st = Choosing_Number;
+				}else if(st == Choosing_Number){
+					st = Entering_Number;
+				}
+			}
 		}
 
-		if (last_flank_causing_exti != last_managed_exti) {	//If button has been pressed.
-			now = HAL_GetTick();
-			if (now - last_flank_causing_exti >= 20) {//Delay to eliminate contact bounce.
-				last_managed_exti = last_flank_causing_exti;
-				//What happens when the button is pressed.
-				Paint_ClearWindows(214, 26, 248, 50, WHITE);
-				Paint_DrawNum(214, 26, encoder_value, &Font24, WHITE, BLACK);
+		//Check if rotary encoder has been turned.
+		if(encoder_value != last_encoder_value){
+			//Check which way the encoder was turned.
+			if(encoder_value > last_encoder_value){
+				bigger = TRUE;
+			}else{
+				bigger = FALSE;
+			}
+			last_encoder_value = encoder_value;
+
+			//Check if st is Choosing_Number or Entering_Number.
+			switch(st){
+				case Choosing_Number: //If Choosing_Number.
+					//Check what number we are currently hovering over and depending on that changing av and updating the screen.
+					if(av == HCP){
+						av = Hole;
+						Paint_ClearWindows(213, 50, 232, 52, WHITE);
+						Paint_DrawLine(95, 77, 112, 77, BLACK, 1, LINE_STYLE_DOTTED);
+						EPD_2in13_V4_Display_Partial(ImageBuffer);
+					}else if(av == Hole){ //If we are hovering over Hole value.
+						av = Strokes; //Change av to say that we are hovering over Strokes value and update display accordingly.
+						Paint_ClearWindows(94, 76, 113, 78, WHITE);
+						Paint_DrawLine(146, 103, 163, 103, BLACK, 1, LINE_STYLE_DOTTED);
+						EPD_2in13_V4_Display_Partial(ImageBuffer);
+					}else if(av == Strokes){
+						av = Hole;
+						Paint_ClearWindows(145, 102, 164, 104, WHITE);
+						Paint_DrawLine(95, 77, 112, 77, BLACK, 1, LINE_STYLE_DOTTED);
+						EPD_2in13_V4_Display_Partial(ImageBuffer);
+					}
+					break;
+				case Entering_Number: //If Entering_Number.
+					//Check what number we have selected and increase/decrease that number by 1 and update display accordingly.
+					if(av == HCP){
+						//Increase or decrease value depending on rotation direction.
+						if(bigger){extra_strokes += 1;}else if(extra_strokes > 0){extra_strokes -= 1;}
+						//Update display.
+						Paint_ClearWindows(214, 26, 248, 50, WHITE);
+						Paint_DrawNum(214, 26, extra_strokes, &Font24, WHITE, BLACK);
+						EPD_2in13_V4_Display_Partial(ImageBuffer);
+					}else if(av == Hole){
+						if(bigger && hole < 18){hole += 1;}else if(hole > 1){hole -= 1;}
+						Paint_ClearWindows(95, 52, 129, 76, WHITE);
+						Paint_ClearWindows(146, 78, 180, 102, WHITE);
+						Paint_ClearWindows(213, 52, 247, 76, WHITE);
+						Paint_DrawNum(95, 52, hole, &Font24, WHITE, BLACK);
+						Paint_DrawNum(146, 78, strokes[hole], &Font24, WHITE, BLACK);
+						Paint_DrawNum(213, 52, par[hole], &Font24, WHITE, BLACK);
+						EPD_2in13_V4_Display_Partial(ImageBuffer);
+					}else if(av == Strokes){
+						if(bigger){strokes[hole] += 1;}else if(strokes[hole] > 0){strokes[hole] -= 1;}
+						Paint_ClearWindows(146, 78, 180, 102, WHITE);
+						Paint_DrawNum(146, 78, strokes[hole], &Font24, WHITE, BLACK);
+						EPD_2in13_V4_Display_Partial(ImageBuffer);
+					}
+					break;
+			}
+
+			//If we have changed Hole or Strokes value then calculate points and update the display.
+			if(av == Hole || av == Strokes){
+				calculate_stableford_points();
+				Paint_ClearWindows(49, 104, 71, 120, WHITE);
+				Paint_ClearWindows(195, 104, 217, 120, WHITE);
+				Paint_DrawNum(49, 104, points[hole], &Font16, WHITE, BLACK);
+				Paint_DrawNum(195, 104, get_total_points(), &Font16, WHITE, BLACK);
 				EPD_2in13_V4_Display_Partial(ImageBuffer);
 			}
+
 		}
 		/* USER CODE END WHILE */
 
